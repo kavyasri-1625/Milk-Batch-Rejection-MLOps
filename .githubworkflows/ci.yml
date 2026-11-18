@@ -1,0 +1,30 @@
+
+name: Milk MLOps CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install pandas numpy scikit-learn
+          pip install fastapi uvicorn joblib
+          pip install pytest httpx
+
+      - name: Run Validation Tests
+        run: pytest -v
